@@ -1,5 +1,5 @@
 import httpStatus from "http-status";
-import { travelService } from "../services/travelServices";
+import { travelService } from "../services/travelServices.js";
 
 async function create (req, res) {
   const { passengerId, flightId } = req.body;
