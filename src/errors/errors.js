@@ -12,6 +12,13 @@ export function conflict (resource = 'Item') {
   };
 };
 
+export function bodyConflict (resource = 'Item') {
+  return {
+    type: 'conflict',
+    message: `${resource} devem ser diferentes!`
+  };
+};
+
 export function invalidEntity (errors) {
   return {
     type: 'invalid_entity',
@@ -19,4 +26,4 @@ export function invalidEntity (errors) {
   };
 };
 
-export const errors = { notFound, conflict, invalidEntity }
+export const errors = { notFound, conflict, bodyConflict, invalidEntity };
