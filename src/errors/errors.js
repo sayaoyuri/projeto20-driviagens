@@ -26,4 +26,11 @@ export function invalidEntity (errors) {
   };
 };
 
-export const errors = { notFound, conflict, bodyConflict, invalidEntity };
+export function badRequest (error) {
+  return {
+    type: 'bad_request',
+    message: error
+  }
+};
+
+export const errors = { notFound, conflict, bodyConflict, invalidEntity, badRequest };

@@ -8,3 +8,8 @@ export const flightSchema = Joi.object({
   destination: Joi.number().integer().required(),
   date: Joi.date().format('DD-MM-YYYY').required().greater(Date.now())
 });
+
+export const dateSchema = Joi.object({
+  smallerDate: Joi.date().format('DD-MM-YYYY').required(),
+  biggerDate: Joi.date().format('DD-MM-YYYY').required()
+});
