@@ -5,10 +5,10 @@ async function create (firstName, lastName) {
   await passengerRepository.create(firstName, lastName);
 };
 
-async function readTravels (name) {
-  const passengersTravels = await passengerRepository.readTravels(name);
+async function readTravels (name, page = 1, pageSize = 10) {
+  const passengersTravels = await passengerRepository.readTravels(name, page, pageSize);
 
-  if(passengersTravels.rows.length > 10) throw errors.tooManyResults();
+  if(passengersTravels.rows.length > pageSize) throw errors.tooManyResults();
 
   return passengersTravels.rows;
 };

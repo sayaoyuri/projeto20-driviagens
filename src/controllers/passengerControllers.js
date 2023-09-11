@@ -10,9 +10,9 @@ async function create (req, res) {
 };
 
 async function readTravels (req, res) {
-  const { name } = req.query;
+  const { name, page } = req.query;
 
-  const passengerTravels = await passengerService.readTravels(name);
+  const passengerTravels = await passengerService.readTravels(name, page);
 
   return res.status(200).send(passengerTravels);
 };

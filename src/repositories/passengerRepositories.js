@@ -6,13 +6,15 @@ async function create (firstName, lastName) {
   `, [firstName, lastName]);
 };
 
-async function readTravels (name) {
+async function readTravels (name, page, pageSize) {
+  const offset = (page - 1) * pageSize;
+
   let query = `
     SELECT p.id, p."firstName" || ' ' || p."lastName" AS passenger, count(*) AS travels
       FROM passengers AS p 
         JOIN travels AS t 
         ON t."passengerId" = p.id`;
-        
+
   const params = [];
 
   if(name) {
@@ -21,9 +23,14 @@ async function readTravels (name) {
     query += ` WHERE p."firstName" ILIKE '%' || $${params.length} || '%' OR p."lastName" ILIKE '%' || $${params.length} || '%'`;
   };
 
+  params.push(pageSize);
   query += `
     GROUP BY p.id
-    ORDER BY travels DESC;`;
+    ORDER BY travels DESC
+    LIMIT $${params.length}`;
+  
+  params.push(offset);
+  query += ` OFFSET $${params.length};`;
 
   return await db.query(query, params);
 };
