@@ -10,7 +10,7 @@ async function readTravels (name, page, pageSize) {
   const offset = (page - 1) * pageSize;
 
   let query = `
-    SELECT p.id, p."firstName" || ' ' || p."lastName" AS passenger, count(*) AS travels
+    SELECT p.id, p."firstName" || ' ' || p."lastName" AS passenger, CAST(count(*) AS int) AS travels
       FROM passengers AS p 
         JOIN travels AS t 
         ON t."passengerId" = p.id`;
