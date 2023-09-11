@@ -6,7 +6,7 @@ async function create (origin, destination, date) {
   `, [origin, destination, date]);
 };
 
-async function read (origin, destination, smallerDate, biggerDate) {
+async function read (origin, destination, smallerDate, biggerDate, pageSize, offset) {
   let query = `
     SELECT f.id, c1.name AS origin, c2.name AS destination, TO_CHAR(f.date, 'DD-MM-YYYY') AS date
       FROM flights f
@@ -41,7 +41,14 @@ async function read (origin, destination, smallerDate, biggerDate) {
     query += ` AND f.date <= $${params.length}`;
   };
 
-  query += ' ORDER BY f.date ASC;';
+  query += ' ORDER BY f.date ASC';
+
+  params.push(pageSize);
+  query += `
+    LIMIT $${params.length}`;
+
+  params.push(offset);
+  query += ` OFFSET $${params.length};`;
 
   return await db.query(query, params);
 };

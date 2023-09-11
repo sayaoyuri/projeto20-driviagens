@@ -6,6 +6,8 @@ async function create (firstName, lastName) {
 };
 
 async function readTravels (name, page = 1, pageSize = 10) {
+  if(isNaN(page) || page < 1) throw errors.badRequest('Invalid page value');
+
   const passengersTravels = await passengerRepository.readTravels(name, page, pageSize);
 
   if(passengersTravels.rows.length > pageSize) throw errors.tooManyResults();

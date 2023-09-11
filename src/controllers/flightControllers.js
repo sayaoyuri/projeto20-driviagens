@@ -12,11 +12,11 @@ async function create (req, res) {
 };
 
 async function read (req, res) {
-  const { origin, destination } = req.query;
+  const { origin, destination, page } = req.query;
   const biggerDate = req.query['bigger-date'];
   const smallerDate = req.query['smaller-date'];
 
-  const flights = await flightServices.read(origin, destination, smallerDate, biggerDate);
+  const flights = await flightServices.read(origin, destination, smallerDate, biggerDate, page);
   
   return res.status(200).send(flights);
 };

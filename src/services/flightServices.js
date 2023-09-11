@@ -12,7 +12,9 @@ async function create (origin, destination, date) {
   await flightRepository.create(origin, destination, date);
 };
 
-async function read (origin, destination, smallerDate, biggerDate) {
+async function read (origin, destination, smallerDate, biggerDate, page = 1, pageSize = 10) {
+  if(isNaN(page) || page < 1) throw errors.badRequest('Invalid page value');
+
   if(smallerDate && !biggerDate || biggerDate && !smallerDate) throw errors.invalidEntity('Período de data deve ter início e fim!');
   
   if(smallerDate && biggerDate) {
@@ -28,7 +30,9 @@ async function read (origin, destination, smallerDate, biggerDate) {
     if(smallerDateUnix > biggerDateUnix) throw errors.badRequest('Data inicial do período de data deve ser inferior a data final!');
   };
 
-  const flights = await flightRepository.read(origin, destination, smallerDate, biggerDate);
+  const offset = (page -1) * pageSize;
+
+  const flights = await flightRepository.read(origin, destination, smallerDate, biggerDate, pageSize, offset);
 
   return flights.rows;
 };
