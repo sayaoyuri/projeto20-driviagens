@@ -41,7 +41,7 @@ async function read (origin, destination, smallerDate, biggerDate) {
     query += ` AND f.date <= $${params.length}`;
   };
 
-  query += ' ORDER BY f.date DESC;';
+  query += ' ORDER BY f.date ASC;';
 
   return await db.query(query, params);
 };
