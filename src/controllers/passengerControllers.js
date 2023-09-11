@@ -9,4 +9,12 @@ async function create (req, res) {
   res.sendStatus(httpStatus.CREATED);
 };
 
-export const passengerController = { create };
+async function readTravels (req, res) {
+  const { name } = req.query;
+
+  const passengerTravels = await passengerService.readTravels(name);
+
+  return res.status(200).send(passengerTravels);
+};
+
+export const passengerController = { create, readTravels };

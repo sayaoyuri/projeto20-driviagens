@@ -30,7 +30,14 @@ export function badRequest (error) {
   return {
     type: 'bad_request',
     message: error
-  }
+  };
 };
 
-export const errors = { notFound, conflict, bodyConflict, invalidEntity, badRequest };
+export function tooManyResults () {
+  return {
+    type: 'too_many_results',
+    message: 'Too Many Results'
+  };
+};
+
+export const errors = { notFound, conflict, bodyConflict, invalidEntity, badRequest, tooManyResults };

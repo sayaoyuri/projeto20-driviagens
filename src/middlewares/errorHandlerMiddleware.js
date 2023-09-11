@@ -29,6 +29,8 @@ export default function errorHandler (error, req, res, next) {
       return res.status(httpStatus.NOT_FOUND).send(error.message);
     case 'bad_request':
       return res.status(httpStatus.BAD_REQUEST).send(error.message);
+    case 'too_many_results':
+      return res.status(httpStatus.INTERNAL_SERVER_ERROR).send(error.message);
     default:
       return res.status(httpStatus.INTERNAL_SERVER_ERROR).send('Sorry, something went wrong!');
   };
